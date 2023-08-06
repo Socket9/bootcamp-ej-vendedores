@@ -1,14 +1,14 @@
 // Cargar nombre del empleado
-const getName = (msg) => {
+const getName = msg => {
   let name;
   do {
     name = prompt(msg);
   } while (!name && /^([a-zA-ZñÑáéíóúÁÉÍÓÚ])+$/i.test(name));
-  return name;
+  return name.toUpperCase();
 };
 
 // Cargar valor ENTERO
-const getIntValue = (msg) => {
+const getIntValue = msg => {
   let value;
   do {
     value = Number(prompt(msg));
@@ -17,7 +17,7 @@ const getIntValue = (msg) => {
 };
 
 // Cargar valor FLOAT
-const getFloatValue = (msg) => {
+const getFloatValue = msg => {
   let value;
   do {
     value = Number(prompt(msg));
@@ -26,7 +26,7 @@ const getFloatValue = (msg) => {
 };
 
 // Cargar porcentaje de comisión
-const getPercentage = (msg) => {
+const getPercentage = msg => {
   let percentage;
   do {
     percentage = Number(prompt(msg));
@@ -35,7 +35,7 @@ const getPercentage = (msg) => {
 };
 
 // Cargar opcion (1 o 2) para continuar o cancelar la carga de empleados
-const getContinueValue = (msg) => {
+const getContinueValue = msg => {
   let value;
   do {
     value = Number(prompt(msg));
@@ -50,9 +50,7 @@ const getEmployee = () => {
   employee.unitValue = getFloatValue("Valor unitario del producto: ");
   employee.salesQuantity = getIntValue("Cantidad de ventas del producto: ");
   employee.baseSalary = getFloatValue("Salario base del empleado: ");
-  employee.commissionPercentage = getPercentage(
-    "Porcentaje de comision(Entre 0 y 20): "
-  );
+  employee.commissionPercentage = getPercentage("Porcentaje de comision(Entre 0 y 20): ");
   return employee;
 };
 
@@ -65,15 +63,15 @@ const cycleContinue = () => {
 };
 
 // Calcular comision ganada
-const getCommissionEarned = (employee) => {
+const getCommissionEarned = employee => {
   return (
     employee.unitValue * employee.salesQuantity * employee.commissionPercentage
   );
 };
 
 // Calcular monto total a cobrar
-const getTotalSalary = (employee) => {
-  return employee.baseSalary + employee.commissionEarned;
+const getTotalSalary = employee => {
+  return (employee.baseSalary + employee.commissionEarned).toFixed(2);
 };
 
 const showTotalSalary = (name, totalSalary) => {
@@ -113,7 +111,7 @@ const compareBySalaries = (firstEmployee, secondEmployee) => {
   return firstEmployee.totalSalary - secondEmployee.totalSalary;
 };
 
-const getSortedEmployeeList = (employeeList) => {
+const getSortedEmployeeList = employeeList => {
   // Hago una copia de la lista original
   const employeeListAux = employeeList.slice();
   // Lo ordeno
@@ -126,7 +124,7 @@ const getSortedEmployeeList = (employeeList) => {
 //============================
 
 // Obtener salario mas alto
-const getHighestSalary = (sortedList) => {
+const getHighestSalary = sortedList => {
   let highestSalaryEmployee = {
     name: sortedList[sortedList.length - 1].name,
     salary: sortedList[sortedList.length - 1].totalSalary,
@@ -135,7 +133,7 @@ const getHighestSalary = (sortedList) => {
 };
 
 // Obtener salario mas bajo
-const getLowestSalary = (sortedList) => {
+const getLowestSalary = sortedList => {
   let lowestSalaryEmployee = {
     name: sortedList[0].name,
     salary: sortedList[0].totalSalary,
@@ -144,7 +142,7 @@ const getLowestSalary = (sortedList) => {
 };
 
 // Obtener posición del salario mas alto
-const getHighestSalaryPosition = (sortedList) => {
+const getHighestSalaryPosition = sortedList => {
   let highestSalaryEmployeePosition = {
     name: sortedList[sortedList.length - 1].name,
     position: sortedList.length,
@@ -153,7 +151,7 @@ const getHighestSalaryPosition = (sortedList) => {
 };
 
 // Obtener posición del salario mas alto
-const getLowestSalaryPosition = (sortedList) => {
+const getLowestSalaryPosition = sortedList => {
   let lowestSalaryEmployeePosition = {
     name: sortedList[0].name,
     position: 1,
@@ -162,7 +160,7 @@ const getLowestSalaryPosition = (sortedList) => {
 };
 
 // Obtener promedio entre los salarios
-const getAverageSalaries = (sortedList) => {
+const getAverageSalaries = sortedList => {
   let aux = 0;
   sortedList.forEach((employee) => {
     aux += employee.totalSalary;
@@ -171,7 +169,7 @@ const getAverageSalaries = (sortedList) => {
 };
 
 // Obtener cantidad de salarios menores a 10000
-const getSalariesUnder10000 = (sortedList) => {
+const getSalariesUnder10000 = sortedList => {
   let aux = 0;
   sortedList.forEach((employee) => {
     if (employee.totalSalary < 10000) {
@@ -182,7 +180,7 @@ const getSalariesUnder10000 = (sortedList) => {
 };
 
 // Obtener cantidad de salarios mayores a 50000
-const getSalariesOver50000 = (sortedList) => {
+const getSalariesOver50000 = sortedList => {
   let aux = 0;
   sortedList.forEach((employee) => {
     if (employee.totalSalary > 50000) {
@@ -193,13 +191,10 @@ const getSalariesOver50000 = (sortedList) => {
 };
 
 // Obtener mayor comisión ganada
-const findHighestCommissionEmployee = (sortedList) => {
+const findHighestCommissionEmployee = sortedList => {
   let highestCommissionEmployee = sortedList[0];
   for (let i = 0; i < sortedList.length; i++) {
-    if (
-      sortedList[i].commissionEarned >
-      highestCommissionEmployee.commissionEarned
-    ) {
+    if (sortedList[i].commissionEarned > highestCommissionEmployee.commissionEarned) {
       highestCommissionEmployee = sortedList[i];
     }
   }
@@ -207,12 +202,10 @@ const findHighestCommissionEmployee = (sortedList) => {
 };
 
 // Obtener menor comisión ganada
-const findLowestCommissionEmployee = (sortedList) => {
+const findLowestCommissionEmployee = sortedList => {
   let lowestCommissionEmployee = sortedList[0];
   for (let i = 0; i < sortedList.length; i++) {
-    if (
-      sortedList[i].commissionEarned < lowestCommissionEmployee.commissionEarned
-    ) {
+    if (sortedList[i].commissionEarned < lowestCommissionEmployee.commissionEarned) {
       lowestCommissionEmployee = sortedList[i];
     }
   }
@@ -220,7 +213,7 @@ const findLowestCommissionEmployee = (sortedList) => {
 };
 
 // Encontrar empleado con mas ventas
-const findHighestSalesEmployee = (sortedList) => {
+const findHighestSalesEmployee = sortedList => {
   let highestSalesEmployee = sortedList[0];
   for (let i = 0; i < sortedList.length; i++) {
     if (sortedList[i].salesQuantity > highestSalesEmployee.salesQuantity) {
@@ -231,7 +224,7 @@ const findHighestSalesEmployee = (sortedList) => {
 };
 
 // Encontrar empleado con menos ventas
-const findLowestSalesEmployee = (sortedList) => {
+const findLowestSalesEmployee = sortedList => {
   let lowestSalesEmployee = sortedList[0];
   for (let i = 0; i < sortedList.length; i++) {
     if (sortedList[i].salesQuantity < lowestSalesEmployee.salesQuantity) {
@@ -242,7 +235,7 @@ const findLowestSalesEmployee = (sortedList) => {
 };
 
 // Validamos que la lista no esté vacía
-const isValid = (sortedList) => {
+const isValid = sortedList => {
   if (sortedList.length === 0) {
     return false;
   }
@@ -250,27 +243,20 @@ const isValid = (sortedList) => {
 };
 
 // Obtener estadisiticas
-const getEmployeeStatistics = (sortedEmployeeList) => {
+const getEmployeeStatistics = sortedEmployeeList => {
   const statistics = {};
   if (isValid(sortedEmployeeList)) {
     statistics.highestSalary = getHighestSalary(sortedEmployeeList);
     statistics.lowestSalary = getLowestSalary(sortedEmployeeList);
-    statistics.highestSalaryPosition =
-      getHighestSalaryPosition(sortedEmployeeList);
-    statistics.lowestSalaryPosition =
-      getLowestSalaryPosition(sortedEmployeeList);
+    statistics.highestSalaryPosition = getHighestSalaryPosition(sortedEmployeeList);
+    statistics.lowestSalaryPosition = getLowestSalaryPosition(sortedEmployeeList);
     statistics.averageSalaries = getAverageSalaries(sortedEmployeeList);
     statistics.salariesUnder10000 = getSalariesUnder10000(sortedEmployeeList);
     statistics.salariesOver50000 = getSalariesOver50000(sortedEmployeeList);
-    statistics.highestCommissionEmployee =
-      findHighestCommissionEmployee(sortedEmployeeList);
-    statistics.lowestCommissionEmployee =
-      findLowestCommissionEmployee(sortedEmployeeList);
-    statistics.highestSalesEmployee =
-      findHighestSalesEmployee(sortedEmployeeList);
-    statistics.lowestSalesEmployee =
-      findLowestSalesEmployee(sortedEmployeeList);
-
+    statistics.highestCommissionEmployee = findHighestCommissionEmployee(sortedEmployeeList);
+    statistics.lowestCommissionEmployee = findLowestCommissionEmployee(sortedEmployeeList);
+    statistics.highestSalesEmployee = findHighestSalesEmployee(sortedEmployeeList);
+    statistics.lowestSalesEmployee = findLowestSalesEmployee(sortedEmployeeList);
     return statistics;
   }
   return null;
@@ -280,7 +266,7 @@ const getEmployeeStatistics = (sortedEmployeeList) => {
 //======= MOSTRAR EN PANTALLA =======
 //===================================
 
-const showStatistics = (statistics) => {
+const showStatistics = statistics => {
   if (statistics != null) {
     alert(`
         Salario más alto: $${statistics.highestSalary.salary} \t Empleado: ${statistics.highestSalary.name}
